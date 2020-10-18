@@ -1,10 +1,43 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@android:color/holo_green_dark</item>
+        <item name="colorPrimaryDark">@android:color/holo_green_dark</item>
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+
+    <style name="MyDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@android:color/holo_green_dark</item>
+        <!--selected Item color-->
+        <item name="colorControlActivated">@android:color/holo_green_dark</item>
+        <!-- arrow bordercolor(<>)-->
+        <item name="android:selectableItemBackgroundBorderless">@android:color/transparent</item>
+        <!-- Highlight item color-->
+        <item name="colorControlHighlight">@android:color/holo_green_dark</item>
+        <!--Calender Background color -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- Ok Cancel Color-->
+        <item name="android:textColor">#4CAF50</item>
+        <!-- Week TextColor-->
+        <item name="android:textColorSecondary">@android:color/holo_green_dark</item>
+        <!-- Calender Number color arrow color (< >) -->
+        <item name="android:textColorPrimary">#000000</item>
+        <!--day , month-->
+        <item name="android:textColorPrimaryInverse">#FFFFFF</item>
+        <!-- year-->
+        <item name="android:textColorSecondaryInverse">#FFFFFF</item>
+    </style>
+
+    <style name="PopUpMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
 </resources>

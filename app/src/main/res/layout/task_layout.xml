@@ -11,13 +11,21 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        >
         <CheckBox
             android:id="@+id/todoCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is an Sample Task inside Application"
-            android:paddingStart="8dp"
+            android:layout_marginRight="8dp"
             android:buttonTint="@android:color/holo_green_dark"/>
+        <TextView
+            android:id="@+id/todoTextTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is an Sample Task inside Application"
+            android:layout_toRightOf="@id/todoCheckBox"
+            android:layout_centerInParent="true"
+            />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

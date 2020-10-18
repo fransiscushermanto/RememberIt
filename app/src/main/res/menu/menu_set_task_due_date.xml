@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_todayDue"
+        android:title="@string/due_today"
+        android:icon="@drawable/ic_calendar"
+        />
+    <item
+        android:id="@+id/item_tomorrowDue"
+        android:title="@string/due_tomorrow"
+        android:icon="@drawable/ic_calendar_tomorrow"
+        />
+    <item
+        android:id="@+id/item_nextWeekDue"
+        android:title="@string/due_next_week"
+        android:icon="@drawable/ic_calendar_next_week"
+        />
+    <item
+        android:id="@+id/item_customDue"
+        android:title="@string/due_custom"
+        android:icon="@drawable/ic_calendar"
+        />
+
+</menu>

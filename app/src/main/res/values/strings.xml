@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">RememberIt</string>
+    <string name="home_page_title">Tasks</string>
+    <string name="btn_due_date">Set due date</string>
+    <string name="btn_remind_me">Remind me</string>
+    <string name="btn_repeat">Repeat</string>
+    <string name="due_today">Today</string>
+    <string name="due_tomorrow">Tomorrow</string>
+    <string name="due_next_week">Next Week</string>
+    <string name="due_custom">Pick a date</string>
 </resources>
