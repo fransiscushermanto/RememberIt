@@ -8,4 +8,18 @@
     <string name="due_tomorrow">Tomorrow</string>
     <string name="due_next_week">Next Week</string>
     <string name="due_custom">Pick a date</string>
+    <string-array name="month_abrev">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>June</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sept</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Des</item>
+    </string-array>
 </resources>

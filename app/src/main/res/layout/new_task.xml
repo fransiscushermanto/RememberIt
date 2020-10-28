@@ -1,65 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <EditText
-        android:id="@+id/newTaskText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:hint="New Task"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp"
-        android:inputType="textCapSentences"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:layout_below="@+id/newTaskText"
-        android:orientation="horizontal"
-        android:gravity="start"
-        android:id="@+id/action_btn_wrapper"
-        >
-        <Button
-            android:id="@+id/setDueDateTask_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_due_date"
-            android:background="@null"
-            android:drawableLeft="@drawable/ic_calendar"
-            android:drawablePadding="10dp"
-            android:textAllCaps="false"
-            android:layout_marginRight="15dp"
-            />
-        <Button
-            android:id="@+id/remindMeTask_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:textAllCaps="false"
-            android:drawableLeft="@drawable/ic_notifications"
-            android:drawablePadding="10dp"
-            android:text="@string/btn_remind_me"
-            android:layout_marginRight="15dp"
-            />
-        <Button
-            android:id="@+id/repeatTask_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:textAllCaps="false"
-            android:drawableLeft="@drawable/ic_repeat"
-            android:drawablePadding="10dp"
-            android:text="@string/btn_repeat"
-            />
-    </LinearLayout>
-
 
     <Button
         android:id="@+id/newTaskButton"
@@ -67,9 +9,71 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/action_btn_wrapper"
         android:layout_alignParentEnd="true"
-        android:textSize="16sp"
+        android:background="@android:color/transparent"
         android:text="Save"
         android:textAllCaps="false"
-        android:background="@android:color/transparent"
-        android:textColor="@android:color/darker_gray"/>
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/newTaskText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:hint="New Task"
+        android:inputType="textCapSentences"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newTaskText"
+        android:id="@+id/action_btn_wrapper">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
+            <Button
+                android:id="@+id/setDueDateTask_button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_calendar_main"
+                android:drawablePadding="10dp"
+                android:text="@string/btn_due_date"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                android:layout_marginRight="15dp"/>
+
+            <Button
+                android:id="@+id/remindMeTask_button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginRight="15dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_notifications"
+                android:drawablePadding="10dp"
+                android:text="@string/btn_remind_me"
+                android:textAllCaps="false"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/repeatTask_button"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:background="@null"
+                android:drawableLeft="@drawable/ic_repeat"
+                android:drawablePadding="10dp"
+                android:text="@string/btn_repeat"
+                android:textAllCaps="false"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
 </RelativeLayout>

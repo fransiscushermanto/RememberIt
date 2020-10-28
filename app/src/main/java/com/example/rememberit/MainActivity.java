@@ -1,6 +1,7 @@
 package com.example.rememberit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,11 +48,16 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         taskList = new ArrayList<>();
 
         fab = findViewById(R.id.fab);
+
+
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         toDoAdapter = new ToDoAdapter(this, db);
         tasksRecyclerView.setAdapter(toDoAdapter);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(toDoAdapter));
+        itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
         IntentFilter filter = new IntentFilter(DATABASE_CHANGED);;
         registerReceiver(broadcastReceiver, filter);

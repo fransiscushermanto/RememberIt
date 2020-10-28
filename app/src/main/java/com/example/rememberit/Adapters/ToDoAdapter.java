@@ -1,5 +1,6 @@
 package com.example.rememberit.Adapters;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,6 +64,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public int getItemCount() {
         return todoList.size();
     }
+
+    public Context getContext() {return activity;}
 
     public void setTasks(List<ToDoModel> todoList) {
         this.todoList = todoList;
