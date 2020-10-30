@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/dateTimePickeR_tabLayout"
+        style="@style/MyDatePickerStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_DatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_TimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <FrameLayout
+        android:id="@+id/dateTime_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="450dp"
+        android:layout_below="@id/dateTimePickeR_tabLayout" />
+
+    <LinearLayout
+        android:id="@+id/action_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateTime_placeholder"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginBottom="10dp">
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="Cancel"
+            android:textColor="@color/colorPrimaryDark"/>
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:text="Save"
+            android:textColor="@color/colorPrimaryDark"/>
+    </LinearLayout>
+
+</RelativeLayout>

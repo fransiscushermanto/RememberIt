@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_laterTodayRemind"
+        android:title="@string/remind_later_today"
+        android:icon="@drawable/ic_future_clock"
+        />
+    <item
+        android:id="@+id/item_tomorrowRemind"
+        android:title="@string/remind_tomorrow"
+        android:icon="@drawable/ic_tomorrow_clock"
+        />
+    <item
+        android:id="@+id/item_nextWeekRemind"
+        android:title="@string/remind_next_week"
+        android:icon="@drawable/ic_next_week_clock"
+        />
+    <item
+        android:id="@+id/item_customRemind"
+        android:title="@string/remind_custom"
+        android:icon="@drawable/ic_date_time_picker"
+        />
+</menu>

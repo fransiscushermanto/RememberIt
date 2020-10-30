@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.fragment.app.FragmentManager;
 
 public class AddNewTask extends BottomSheetDialogFragment {
     public static final String TAG = "ActionBottomDialog";
@@ -62,6 +64,11 @@ public class AddNewTask extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.DialogStyle);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Nullable
@@ -171,20 +178,14 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-//                            Drawable unwrappedCalendarDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_calendar);
-//                            Drawable wrappedCalendarDrawable = DrawableCompat.wrap(unwrappedCalendarDrawable);
-//                            DrawableCompat.setTint(wrappedCalendarDrawable, Color.BLACK);
                             switch (menuItem.getItemId()) {
                                 case R.id.item_todayDue:
-                                    changeBtnBgColorDrawableColor("Due Today", R.id.setDueDateTask_button);
                                     Toast.makeText(getContext(), String.valueOf(getDateTime(0, "EEEE, dd-MM-YYYY HH:mm a")), Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.item_tomorrowDue:
-                                    changeBtnBgColorDrawableColor("Due Tomorrow", R.id.setDueDateTask_button);
                                     Toast.makeText(getContext(), String.valueOf(getDateTime(1, "EEEE, dd-MM-YYYY HH:mm a")), Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.item_nextWeekDue:
-                                    changeBtnBgColorDrawableColor(String.format("Due %s", getDateTime(0, "EE, MMM d")), R.id.setDueDateTask_button);
                                     Toast.makeText(getContext(), String.valueOf(getDateTime(7, "EEEE, dd-MM-YYYY HH:mm a")), Toast.LENGTH_SHORT).show();
                                     break;
                                 case R.id.item_customDue:
@@ -240,6 +241,55 @@ public class AddNewTask extends BottomSheetDialogFragment {
                 }
                 return false;
 
+            }
+        });
+
+        setRemindMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context wrapper = new ContextThemeWrapper(getContext(), R.style.PopUpMenu);
+                PopupMenu popupMenu = new PopupMenu(wrapper, setRemindMe);
+                try {
+                    Field field = popupMenu.getClass().getDeclaredField("mPopup");
+                    field.setAccessible(true);
+                    Object menuPopupHelper = field.get(popupMenu);
+                    menuPopupHelper.getClass().getDeclaredMethod("setForceShowIcon", boolean.class).invoke(menuPopupHelper, true);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    popupMenu.getMenuInflater().inflate(R.menu.menu_set_task_reminder, popupMenu.getMenu());
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.item_laterTodayRemind:
+                                    changeBtnBgColorDrawableColor("Due Today", R.id.setDueDateTask_button);
+                                    Toast.makeText(getContext(), String.valueOf(getDateTime(0, "EEEE, dd-MM-YYYY HH:mm a")), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.item_tomorrowRemind:
+                                    changeBtnBgColorDrawableColor("Due Tomorrow", R.id.setDueDateTask_button);
+                                    Toast.makeText(getContext(), String.valueOf(getDateTime(1, "EEEE, dd-MM-YYYY HH:mm a")), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.item_nextWeekRemind:
+                                    changeBtnBgColorDrawableColor(String.format("Due %s", getDateTime(0, "EE, MMM d")), R.id.setDueDateTask_button);
+                                    Toast.makeText(getContext(), String.valueOf(getDateTime(7, "EEEE, dd-MM-YYYY HH:mm a")), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.item_customRemind:
+                                    calendar = Calendar.getInstance();
+                                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                                    int month = calendar.get(Calendar.MONTH);
+                                    int year = calendar.get(Calendar.YEAR);
+                                    Intent intent = new Intent(getContext(), DateTimePickerDialog.class);
+                                    startActivity(intent);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                }
+                popupMenu.show();
             }
         });
     }

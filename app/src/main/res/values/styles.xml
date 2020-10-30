@@ -7,6 +7,14 @@
         <item name="colorAccent">@android:color/black</item>
     </style>
 
+    <style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundColor">@android:color/transparent</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
     <style name="MyDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorAccent">@android:color/holo_green_dark</item>
         <!--selected Item color-->
