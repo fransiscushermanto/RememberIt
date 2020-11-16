@@ -1,6 +1,7 @@
 package com.example.rememberit.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rememberit.AddNewTask;
+import com.example.rememberit.DetailTask;
 import com.example.rememberit.MainActivity;
+import com.example.rememberit.Models.DateTimeModel;
 import com.example.rememberit.Models.ToDoModel;
 import com.example.rememberit.R;
 import com.example.rememberit.Utils.DatabaseHandler;
@@ -40,6 +43,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         db.openDatabase();
         final ToDoModel item = todoList.get(position);
+        final DateTimeModel dateTimeModel = new DateTimeModel();
         holder.taskTitle.setText(item.getTaskTitle());
         holder.task.setChecked( item.getStatus() == 1 ? true : false );
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -56,7 +60,9 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Id: " + item.getId() +", Title: "+ item.getTaskTitle() + ", Status: " + item.getStatus() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), String.format("Id: %s, Title: %s, Status: %d, Body: %s, Due: %s, Remind: %s", item.getId(), item.getTaskTitle(), item.getStatus(), item.getTaskBody(), item.getDueDate(), item.getRemindMe()) , Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), DetailTask.class);
+                getContext().startActivity(intent);
             }
         });
     }

@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import java.time.LocalDate;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 public class TimePickerFragment extends Fragment {
@@ -38,11 +37,24 @@ public class TimePickerFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = this.getArguments();
         timePicker = view.findViewById(R.id.timepicker);
         calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR_OF_DAY, 4);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        timePicker.setHour(hour);
-        timePicker.setMinute(0);
+        if (bundle != null) {
+            timePicker.setHour(bundle.getInt("hour"));
+            timePicker.setMinute(bundle.getInt("minute"));
+        }else {
+            timePicker.setHour(hour);
+            timePicker.setMinute(0);
+
+        }
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int hour, int minute) {
+                ((DateTimePickerDialog)getActivity()).setTime(hour, minute, 0);
+            }
+        });
     }
 }

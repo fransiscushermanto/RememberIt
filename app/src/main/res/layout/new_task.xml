@@ -31,14 +31,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/newTaskText"
-        android:id="@+id/action_btn_wrapper">
+        android:id="@+id/action_btn_wrapper"
+        >
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="20dp">
-
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp">
             <Button
                 android:id="@+id/setDueDateTask_button"
                 android:layout_width="wrap_content"
@@ -61,18 +62,19 @@
                 android:drawablePadding="10dp"
                 android:text="@string/btn_remind_me"
                 android:textAllCaps="false"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textAlignment="textStart"/>
 
-            <Button
-                android:id="@+id/repeatTask_button"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:background="@null"
-                android:drawableLeft="@drawable/ic_repeat"
-                android:drawablePadding="10dp"
-                android:text="@string/btn_repeat"
-                android:textAllCaps="false"
-                android:textSize="13sp" />
+<!--            <Button-->
+<!--                android:id="@+id/repeatTask_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:background="@null"-->
+<!--                android:drawableLeft="@drawable/ic_repeat"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:text="@string/btn_repeat"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textSize="13sp" />-->
         </LinearLayout>
     </HorizontalScrollView>
 

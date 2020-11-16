@@ -95,7 +95,6 @@ public class RecyclerItemTouchHelper  extends ItemTouchHelper.SimpleCallback {
             //Second Type
             background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getRight(), itemView.getBottom());
 
-//            Log.d("Bounds", String.format("Top: %d, Right: %d, Bottom: %d, Left: %d", background.getBounds().top, background.getBounds().right, background.getBounds().bottom, background.getBounds().left));
         }else if (dX < 0) { //Swipe Left
             int iconLeft = itemView.getRight() - iconMargin - icon.getIntrinsicWidth();
             int iconRight = itemView.getRight() - iconMargin;

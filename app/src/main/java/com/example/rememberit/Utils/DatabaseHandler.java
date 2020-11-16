@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.rememberit.MainActivity;
 import com.example.rememberit.Models.ToDoModel;
@@ -21,10 +22,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TASK_TITLE = "task_title";
     private static final String STATUS = "status";
     private static final String TASK_BODY = "task_body";
+    private static final String DUE_DATE = "due_date";
+    private static final String REMIND_ME = "remind_me";
     private static final String CREATE_TODO_TABLE = "CREATE TABLE " + TODO_TABLE + "(" + ID + " TEXT PRIMARY KEY, " +
-            TASK_TITLE + " TEXT, " + TASK_BODY + " TEXT, " + STATUS + " BOOLEAN)";
+            TASK_TITLE + " TEXT, " + TASK_BODY + " TEXT, " + STATUS + " BOOLEAN, " + DUE_DATE + " DATE, " + REMIND_ME + " DATE )";
     private SQLiteDatabase db;
     private Context mContext;
+
 
     public DatabaseHandler(Context context) {
         super(context, NAME, null, VERSION);
@@ -34,6 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(CREATE_TODO_TABLE);
+        Log.d("~ ", CREATE_TODO_TABLE);
     }
 
     @Override
@@ -54,6 +59,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cv.put(TASK_TITLE, task.getTaskTitle());
         cv.put(TASK_BODY, task.getTaskBody());
         cv.put(STATUS, false);
+        cv.put(DUE_DATE, String.valueOf(task.getDueDate()));
+        cv.put(REMIND_ME, String.valueOf(task.getRemindMe()));
         db.insert(TODO_TABLE, null, cv);
     }
 
@@ -71,6 +78,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         task.setTaskTitle(cur.getString(cur.getColumnIndex(TASK_TITLE)));
                         task.setTaskBody(cur.getString(cur.getColumnIndex(TASK_BODY)));
                         task.setStatus(cur.getInt(cur.getColumnIndex(STATUS)));
+                        task.setDueDate(cur.getString(cur.getColumnIndex(DUE_DATE)));
+                        task.setRemindMe(cur.getString(cur.getColumnIndex(REMIND_ME)));
                         taskList.add(task);
                     } while (cur.moveToNext());
                 }
