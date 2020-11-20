@@ -26,6 +26,7 @@
             android:text="This is an Sample Task inside Application"
             android:layout_toRightOf="@id/todoCheckBox"
             android:layout_centerInParent="true"
+            android:textColor="@android:color/black"
             />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -7,6 +7,10 @@
         <item name="colorAccent">@android:color/black</item>
     </style>
 
+    <style name="RippleEffect">
+        <item name="background">?attr/selectableItemBackground</item>
+    </style>
+
     <style name="AppTheme.Dialog" parent="Base.Theme.AppCompat.Light.Dialog">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

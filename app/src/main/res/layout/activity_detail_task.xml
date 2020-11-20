@@ -1,29 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailTask"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/detailTaskroot_layout">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tasks_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Tasks"
+        android:background="@android:color/white"
+        android:elevation="5dp"
+        />
 
     <LinearLayout
+        android:id="@+id/title_layout"
+        android:layout_below="@id/tasks_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="10dp"
+        android:background="@android:color/white"
+        android:elevation="5dp"
+        android:orientation="horizontal"
+        >
         <CheckBox
             android:id="@+id/todoCheckBox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
             android:layout_marginRight="8dp"
-            android:buttonTint="@android:color/holo_green_dark"/>
-        <TextView
-            android:id="@+id/todoTextTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="This is an Sample Task inside Application"
-            android:layout_toRightOf="@id/todoCheckBox"
-            android:layout_centerInParent="true"
+            android:buttonTint="@android:color/holo_green_dark"
             />
+        <TextView
+            android:id="@+id/todoTextTitle_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@id/todoCheckBox"
+            android:textAlignment="textStart"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="Aa"
+            android:textColor="@android:color/black"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:background="@null"
+            android:clickable="true"
+            android:onClick="onSwapToEditText"/>
+        <com.example.rememberit.LockEditText
+            android:visibility="gone"
+            android:id="@+id/todoTextTitle_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@id/todoCheckBox"
+            android:textAlignment="textStart"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center"
+            android:text="Aa"
+            android:textColor="@android:color/black"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:background="@null"/>
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/action_btn_layout"
+        android:layout_below="@id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:layout_marginHorizontal="8dp"
+        android:elevation="5dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/remindMeWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:onClick="setRemindMe">
+                <Button
+                    android:clickable="false"
+                    android:id="@+id/remindMeTask_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:drawableLeft="@drawable/ic_notifications"
+                    android:drawablePadding="15dp"
+                    android:fontFamily="@font/roboto"
+                    android:paddingHorizontal="15dp"
+                    android:text="Remind me"
+                    android:textSize="15sp"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:layout_weight="1"/>
+                <ImageButton
+                    android:id="@+id/remindMeClose_button"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="10dp"
+                    android:src="@drawable/ic_close"
+                    android:background="@android:color/transparent"
+                    android:onClick="onClear"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dueDateWrapper"
+                android:background="?attr/selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:onClick="setDueDate">
+                <Button
+                    android:clickable="false"
+                    android:id="@+id/setDueDateTask_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    android:drawablePadding="15dp"
+                    android:background="@null"
+                    android:fontFamily="@font/roboto"
+                    android:paddingHorizontal="15dp"
+                    android:text="Add due date"
+                    android:textSize="15sp"
+                    android:textAllCaps="false"
+                    android:textAlignment="textStart"/>
+                <ImageButton
+                    android:id="@+id/dueDateClose_button"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="10dp"
+                    android:src="@drawable/ic_close"
+                    android:background="@android:color/transparent"
+                    android:onClick="onClear"
+                    />
+            </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/task_body"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/action_btn_layout"
+        android:background="@drawable/ripple_effect"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:layout_marginHorizontal="8dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="15dp"
+        android:onClick="openBodyEditor">
+        <TextView
+            android:id="@+id/text_task_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add note"
+            android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/task_body_update_time"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/footer_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingHorizontal="15dp"
+        android:paddingVertical="12dp"
+        android:background="@drawable/border_top"
+        android:elevation="5dp"
+        >
+        <TextView
+            android:id="@+id/task_createdAt"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textAlignment="textStart"
+            android:text="Created on Sat, Oct 31"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:background="@android:color/transparent" />
+    </LinearLayout>
+</RelativeLayout>

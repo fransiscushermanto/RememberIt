@@ -48,7 +48,6 @@ public class TimePickerFragment extends Fragment {
         }else {
             timePicker.setHour(hour);
             timePicker.setMinute(0);
-
         }
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override

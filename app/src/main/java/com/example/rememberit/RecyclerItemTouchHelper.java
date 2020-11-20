@@ -22,7 +22,7 @@ public class RecyclerItemTouchHelper  extends ItemTouchHelper.SimpleCallback {
     private ToDoAdapter adapter;
 
     public RecyclerItemTouchHelper(ToDoAdapter adapter) {
-        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        super(0, ItemTouchHelper.LEFT);
         this.adapter = adapter;
 
     }
@@ -60,7 +60,7 @@ public class RecyclerItemTouchHelper  extends ItemTouchHelper.SimpleCallback {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-        }else {
+        }else if (direction == ItemTouchHelper.RIGHT) {
             adapter.editItem(position);
         }
     }

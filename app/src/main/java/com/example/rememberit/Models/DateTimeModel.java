@@ -2,9 +2,6 @@ package com.example.rememberit.Models;
 
 import android.util.Log;
 
-import androidx.annotation.LongDef;
-
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,6 +28,7 @@ public class DateTimeModel {
     }
 
     public void setYear(int year) {
+        calendar.set(Calendar.YEAR, year);
         this.year = year;
     }
 
@@ -39,6 +37,7 @@ public class DateTimeModel {
     }
 
     public void setMonth(int month) {
+        calendar.set(Calendar.MONTH, month);
         this.month = month;
     }
 
@@ -47,6 +46,7 @@ public class DateTimeModel {
     }
 
     public void setDate(int date) {
+        calendar.set(Calendar.DATE, date);
         this.date = date;
     }
 
@@ -55,6 +55,7 @@ public class DateTimeModel {
     }
 
     public void setHour(int hour) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
         this.hour = hour;
     }
 
@@ -63,6 +64,7 @@ public class DateTimeModel {
     }
 
     public void setMinute(int minute) {
+        calendar.set(Calendar.MINUTE, minute);
         this.minute = minute;
     }
 
@@ -71,6 +73,7 @@ public class DateTimeModel {
     }
 
     public void setSecond(int second) {
+        calendar.set(Calendar.SECOND, second);
         this.second = second;
     }
 
@@ -81,6 +84,7 @@ public class DateTimeModel {
         setMonth(calendar.get(Calendar.MONTH));
         setDate(calendar.get(Calendar.DATE));
         setHour(calendar.get(Calendar.HOUR_OF_DAY));
+        setMinute(calendar.get(Calendar.MINUTE));
         setSecond(calendar.get(Calendar.SECOND));
     }
 
@@ -91,6 +95,7 @@ public class DateTimeModel {
         setMonth(calendar.get(Calendar.MONTH));
         setDate(calendar.get(Calendar.DATE));
         setHour(calendar.get(Calendar.HOUR_OF_DAY));
+        setMinute(calendar.get(Calendar.MINUTE));
         setSecond(calendar.get(Calendar.SECOND));
     }
 
@@ -101,6 +106,7 @@ public class DateTimeModel {
 
     public Calendar getCalendarDateTime() {
         if (calendar != null) {
+            this.calendar.set(getYear(), getMonth(), getDate(), getHour(), getMinute(), getSecond());
             calendar.setTime(this.calendar.getTime());
             return this.calendar;
         }
@@ -108,7 +114,11 @@ public class DateTimeModel {
     }
 
     public String getFormattedDateTime(String pattern, int timeFormat) {
-        return formatDateTime(calendar, pattern, timeFormat);
+        if (getCalendarDateTime().get(Calendar.HOUR_OF_DAY) != getHour()) {
+            getCalendarDateTime().set(Calendar.HOUR_OF_DAY, getHour());
+            getCalendarDateTime().set(Calendar.MINUTE, getMinute());
+        }
+        return formatDateTime(getCalendarDateTime(), pattern, timeFormat);
     }
 
     public Calendar getCalendarCurrentDateTime() {
@@ -129,26 +139,47 @@ public class DateTimeModel {
         return formatDateTime(calendar, "HH:mm:ss a", 12);
     }
 
+    public String formatCurrentDateTimeWithIntervalHour(Calendar calendar, int interval, String pattern, int timeFormat) {
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(calendar.getTime());
+        temp.add(Calendar.HOUR_OF_DAY, interval);
+        return formatDateTime(temp, pattern, timeFormat);
+    }
+
+    public String formatCurrentDateTimeWithIntervalMinute(Calendar calendar, int interval, String pattern, int timeFormat) {
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(calendar.getTime());
+        temp.add(Calendar.MINUTE, interval);
+        return formatDateTime(temp, pattern, timeFormat);
+    }
+
+    public String formatCurrentDateTimeWithIntervalSecond(Calendar calendar, int interval, String pattern, int timeFormat) {
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(calendar.getTime());
+        temp.add(Calendar.SECOND, interval);
+        return formatDateTime(temp, pattern, timeFormat);
+    }
+
     public String formatCurrentDateTimeWithIntervalDaysOfWeek(Calendar calendar, int interval,String pattern) {
-        calendar = Calendar.getInstance();
-        calendar.setTime(calendar.getTime());
-        calendar.add(Calendar.MINUTE, 1);
-        calendar.add(Calendar.DAY_OF_WEEK, interval);
-        return formatDateTime(calendar, pattern, 24);
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(calendar.getTime());
+        temp.add(Calendar.MINUTE, 1);
+        temp.add(Calendar.DAY_OF_WEEK, interval);
+        return formatDateTime(temp, pattern, 24);
     }
 
     public String formatCurrentDateTimeWithIntervalYear(Calendar calendar, int interval, String pattern) {
-        calendar = Calendar.getInstance();
-        calendar.setTime(calendar.getTime());
-        calendar.add(Calendar.YEAR, interval);
-        return formatDateTime(calendar, pattern, 24);
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(calendar.getTime());
+        temp.add(Calendar.YEAR, interval);
+        return formatDateTime(temp, pattern, 24);
     }
 
     public String formatCurrentDateTimeWithIntervalMonth(Calendar calendar, int interval, String pattern) {
-        calendar = Calendar.getInstance();
-        calendar.setTime(calendar.getTime());
-        calendar.add(Calendar.MONTH, interval);
-        return formatDateTime(calendar, pattern, 24);
+        Calendar temp = Calendar.getInstance();
+        temp.setTime(calendar.getTime());
+        temp.add(Calendar.MONTH, interval);
+        return formatDateTime(temp, pattern, 24);
     }
 
     public java.util.Date parseStringToDateTime(String value, String pattern) {

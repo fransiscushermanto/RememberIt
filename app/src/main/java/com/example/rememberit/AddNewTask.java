@@ -139,19 +139,21 @@ public class AddNewTask extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 String text = newTaskTitleText.getText().toString();
-                remindModel.getCalendarDateTime().set(Calendar.HOUR_OF_DAY, remindModel.getHour());
-                Toast.makeText(getContext(), String.valueOf(remindModel.getDateTime()), Toast.LENGTH_LONG).show();
                 if (finalIsUpdate) {
-                    Log.d("Already Update", "finalIsUpdate");
-                    db.updateTask(bundle.getString("id"), text, "");
+                    task.setId(bundle.getString("id"));
+                    task.setTaskBody_id("");
+                    task.setTaskTitle(text);
+                    db.updateTask(task);
+                    ((MainActivity)getContext()).sendBroadcast(new Intent(MainActivity.DATABASE_CHANGED));
                 }
                 else {
-                    long now = Calendar.getInstance().getTimeInMillis();
-                    task.setId(String.valueOf(now));
+                    Calendar now = Calendar.getInstance();
+                    task.setId(String.valueOf(now.getTimeInMillis()));
                     task.setTaskTitle(text);
                     task.setStatus(0);
-                    task.setDueDate(dueDateModel.getCalendarDateTime().toString());
-                    task.setRemindMe(remindModel.getCalendarDateTime().toString());
+                    task.setDueDate(dueDateModel.getCalendarDateTime() == null ? null : dueDateModel.getCalendarDateTime().getTime().toString());
+                    task.setRemindMe(remindModel.getCalendarDateTime() == null ? null : remindModel.getCalendarDateTime().getTime().toString());
+                    task.setCreated_at(now.getTime().toString());
                     db.insertTask(task);
                 }
                 dismiss();
@@ -216,11 +218,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                     datePickerDialog = new DatePickerDialog(getContext(), R.style.MyDatePickerStyle,new DatePickerDialog.OnDateSetListener() {
                                         @Override
                                         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                            Calendar now = Calendar.getInstance();
                                             calendar = Calendar.getInstance();
                                             calendar.setTimeInMillis(0);
                                             calendar.set(year, month, day, 0,0, 0);
                                             dueDateModel.setCalendarDateTime(calendar);
-                                            changeBtnBgColorDrawableColor(String.format("Due %s", checkDate(dueDateModel.getCalendarDateTime(), "EE, MMM d")), R.id.setDueDateTask_button);
+                                            changeBtnBgColorDrawableColor(String.format("Due %s", checkDate(dueDateModel.getCalendarDateTime(), now.get(Calendar.YEAR) !=  dueDateModel.getYear() ? "EE, MMM d, yyyy" : "EE, MMM d")), R.id.setDueDateTask_button);
                                         }
                                     }, year, month, day);
                                     datePickerDialog.show();
@@ -228,8 +231,9 @@ public class AddNewTask extends BottomSheetDialogFragment {
                                 default:
                                     break;
                             }
+
                             if (dueDateModel.getCalendarDateTime() != null && menuItem.getItemId() != R.id.item_customDue) {
-                                changeBtnBgColorDrawableColor(String.format("Due %s", checkDate(dueDateModel.getCalendarDateTime(), "EE, MMM d")), R.id.setDueDateTask_button);
+                                changeBtnBgColorDrawableColor(String.format("Due %s", checkDate(dueDateModel.getCalendarDateTime(), calendar.get(Calendar.YEAR) !=  dueDateModel.getYear() ?"EE, MMM d, yyyy" : "EE, MMM d")), R.id.setDueDateTask_button);
                             }
                             return false;
                         }
@@ -308,17 +312,29 @@ public class AddNewTask extends BottomSheetDialogFragment {
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
+                            calendar = Calendar.getInstance();
+                            calendar.set(Calendar.MINUTE, 0);
                             switch (menuItem.getItemId()) {
                                 case R.id.item_laterTodayRemind:
-                                    String today = getDateTime(0, "EEEE, dd-MM-YYYY HH:mm a");
+                                    String today = dateTimeModel.formatCurrentDateTimeWithIntervalHour(calendar, 4, "EEEE, dd-MM-yyyy H:mm a", 24);
                                     remindModel.setCalendarDateTime(remindModel.parseStringToDateTime(today, "EEEE, dd-MM-yyyy HH:mm a"));
                                     break;
                                 case R.id.item_tomorrowRemind:
-                                    String tomorrow = getDateTime(1, "EEEE, dd-MM-YYYY HH:mm a");
+                                    dateTimeModel = new DateTimeModel();
+                                    java.util.Date parsedTomorrow = dateTimeModel.parseStringToDateTime(getDateTime(1, "EEEE, dd-MM-yyyy HH:mm a"), "EEEE, dd-MM-yyyy HH:mm a");
+                                    dateTimeModel.setCalendarDateTime(parsedTomorrow);
+                                    dateTimeModel.setMinute(0);
+                                    dateTimeModel.setHour(9);
+                                    String tomorrow = dateTimeModel.getFormattedDateTime("EEEE, dd-MM-yyyy HH:mm a", 24);
                                     remindModel.setCalendarDateTime(remindModel.parseStringToDateTime(tomorrow, "EEEE, dd-MM-yyyy HH:mm a"));
                                     break;
                                 case R.id.item_nextWeekRemind:
-                                    String nextWeek = getDateTime(7, "EEEE, dd-MM-YYYY HH:mm a");
+                                    dateTimeModel = new DateTimeModel();
+                                    java.util.Date parsedNextWeek = dateTimeModel.parseStringToDateTime(getDateTime(7, "EEEE, dd-MM-yyyy HH:mm a"), "EEEE, dd-MM-yyyy HH:mm a");
+                                    dateTimeModel.setCalendarDateTime(parsedNextWeek);
+                                    dateTimeModel.setMinute(0);
+                                    dateTimeModel.setHour(9);
+                                    String nextWeek = dateTimeModel.getFormattedDateTime("EEEE, dd-MM-yyyy HH:mm a", 24);
                                     remindModel.setCalendarDateTime(remindModel.parseStringToDateTime(nextWeek, "EEEE, dd-MM-yyyy HH:mm a"));
                                     break;
                                 case R.id.item_customRemind:
@@ -344,6 +360,26 @@ public class AddNewTask extends BottomSheetDialogFragment {
                         }
                     });
                 }
+                Calendar temp = Calendar.getInstance();
+                dateTimeModel = new DateTimeModel();
+                temp.setTime(temp.getTime());
+                temp.add(Calendar.HOUR_OF_DAY, 4);
+                Menu menus = popupMenu.getMenu();
+                if (dueDateModel.checkDifferenceDateWithCurrentDate(temp) == 0) {
+                    temp.setTime(Calendar.getInstance().getTime());
+                    temp.set(Calendar.MINUTE, 0);
+                    menus.getItem(0).setTitle(String.format("Later Today (%s)", dateTimeModel.formatCurrentDateTimeWithIntervalHour(temp, 4, "H:mm a", 12)));
+                }else {
+                    temp.setTime(Calendar.getInstance().getTime());
+                    temp.set(Calendar.MINUTE, 0);
+                    menus.getItem(0).setTitle("Later Today").setEnabled(false);
+                }
+                temp.add(Calendar.DATE, 1);
+                temp.set(Calendar.HOUR_OF_DAY, 9);
+                menus.getItem(1).setTitle(String.format("Tomorrow (%s)", dateTimeModel.formatCurrentDateTimeWithIntervalHour(temp, 0, "EEE H:mm a", 24)));
+                temp.add(Calendar.DATE, 6);
+                temp.set(Calendar.HOUR_OF_DAY, 9);
+                menus.getItem(2).setTitle(String.format("Next Week (%s)", dateTimeModel.formatCurrentDateTimeWithIntervalHour(temp, 0, "EEE H:mm a", 24)));
 
                 popupMenu.show();
             }
@@ -356,13 +392,12 @@ public class AddNewTask extends BottomSheetDialogFragment {
         switch (resultCode) {
             case Activity.RESULT_OK:
                 String result = data.getStringExtra("result");
-                DateFormat parseString = new SimpleDateFormat("EE MMM d HH:mm:ss Z yyyy");
+                Calendar now = Calendar.getInstance();
                 calendar = Calendar.getInstance();
                 try {
-                    Date formatedDate = parseString.parse(result);
-                    calendar.setTime(formatedDate);
+                    calendar.setTime(remindModel.parseStringToDateTime(result, "EE MMM d HH:mm:ss Z yyyy"));
                     remindModel.setCalendarDateTime(calendar);
-                    changeBtnBgColorDrawableColor(String.format("Remind me at %s \n%s", remindModel.getFormattedDateTime("H:mm a", 12), checkDate(remindModel.getCalendarDateTime(), "EE, MMM d")), R.id.remindMeTask_button);
+                    changeBtnBgColorDrawableColor(String.format("Remind me at %s \n%s", remindModel.getFormattedDateTime("H:mm a", 12), checkDate(remindModel.getCalendarDateTime(), now.get(Calendar.YEAR) != remindModel.getYear() ? "EE, MMM d, yyyy" : "EE, MMM d")), R.id.remindMeTask_button);
                 }catch (Exception e) {
                     Log.d("Error parsing", e.getMessage());
                 }

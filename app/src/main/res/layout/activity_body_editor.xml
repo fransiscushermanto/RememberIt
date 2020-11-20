@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BodyEditor"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/task_body_editor_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Title"
+        android:background="@android:color/white"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/task_body_editor_toolbar"
+        android:orientation="vertical"
+        android:background="@android:color/transparent">
+        <ScrollView
+            android:id="@+id/scrollview_taskbody"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:paddingVertical="10dp">
+            <EditText
+                android:id="@+id/task_body_place"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@android:color/transparent"
+                android:hint="Add note"
+                android:paddingHorizontal="15dp"
+                android:gravity="top"
+                />
+        </ScrollView>
+        <TextView
+            android:id="@+id/task_body_update_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="15dp"
+            android:text="Updated a few moments ago"
+            android:textSize="15sp"
+            android:background="@drawable/border_top"/>
+    </LinearLayout>
+
+</RelativeLayout>

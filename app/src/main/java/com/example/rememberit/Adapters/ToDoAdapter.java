@@ -20,6 +20,7 @@ import com.example.rememberit.Models.ToDoModel;
 import com.example.rememberit.R;
 import com.example.rememberit.Utils.DatabaseHandler;
 
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,9 +51,13 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    db.updateStatus(item.getId(), 1);
+                    item.setStatus(1);
+                    item.setFinished_at(Calendar.getInstance().getTime().toString());
+                    db.updateStatus(item);
                 }else {
-                    db.updateStatus(item.getId(), 0);
+                    item.setStatus(0);
+                    item.setFinished_at("");
+                    db.updateStatus(item);
                 }
 
             }
@@ -60,8 +65,8 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ViewHolder> {
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), String.format("Id: %s, Title: %s, Status: %d, Body: %s, Due: %s, Remind: %s", item.getId(), item.getTaskTitle(), item.getStatus(), item.getTaskBody(), item.getDueDate(), item.getRemindMe()) , Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), DetailTask.class);
+                intent.putExtra("task_id", item.getId());
                 getContext().startActivity(intent);
             }
         });

@@ -50,6 +50,7 @@ public class DateTimePickerDialog extends AppCompatActivity {
             hour = intent.getIntExtra("hour", 0);
             minute = intent.getIntExtra("minute", 0);
             second = intent.getIntExtra("second", 0);
+            isTimeSet = isDateSet = true;
         }
         tabLayout = findViewById(R.id.dateTimePickeR_tabLayout);
         btnCancel = findViewById(R.id.btnCancel);
@@ -156,7 +157,6 @@ public class DateTimePickerDialog extends AppCompatActivity {
     private void checkDateTime () {
         calendar.setTime(calendar.getTime());
         calendar.add(Calendar.HOUR_OF_DAY, 4);
-        Log.d("~ ", String.valueOf(year));
         if (year <= 0) {
             year = calendar.get(Calendar.YEAR);
         }
